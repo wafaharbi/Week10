@@ -1,5 +1,6 @@
 package com.example.wafa.studentapp;
 
+import android.content.Context;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
@@ -20,6 +21,9 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.squareup.picasso.Picasso;
+
+import de.hdodenhof.circleimageview.CircleImageView;
 
 
 public class StudentChatTeacher extends AppCompatActivity {
@@ -67,6 +71,8 @@ public class StudentChatTeacher extends AppCompatActivity {
 
 
                 viewHolder.setName(model.getName());
+                viewHolder.setUserImage(model.getImage() , getApplicationContext());
+
 
 
 
@@ -109,6 +115,12 @@ public class StudentChatTeacher extends AppCompatActivity {
             UserName.setText(name);
         }
 
+   public  void setUserImage(String image, Context ctx){
+
+       CircleImageView userImageView = (CircleImageView) mView.findViewById(R.id.user_single_img);
+
+       Picasso.with(ctx).load(image).placeholder(R.drawable.default_img).into(userImageView);
+   }
 
 
     }

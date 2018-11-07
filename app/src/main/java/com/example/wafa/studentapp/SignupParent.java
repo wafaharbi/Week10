@@ -85,33 +85,7 @@ public class SignupParent extends AppCompatActivity implements View.OnClickListe
         final String image = "default";
         final  String thumb_image = "default";
 
-       // final Parent parent= new Parent(name,email,password,phone ,username);
-        //final Student student = new Student(name,email,password,phone ,username);
 
-       // Query usernameQuery  = FirebaseDatabase.getInstance().getReference().child("Parents").equalTo(username);
-        //Query std = FirebaseDatabase.getInstance().getReference().child("Student").equalTo(username);
-
-
-/**
-
-        if(parent.getUsername().equals(student.getUsername()))
-        {
-            Toast.makeText(getApplicationContext(), " done ", Toast.LENGTH_SHORT).show();
-
-
-        }
-
-      
-
-        if(!parent.getUsername().equals(student.getUsername())) {
-
-
-            studentusername.setError(" ##### ");
-            studentusername.requestFocus();
-            return;
-        }
-
-**/
         if(name.isEmpty()){
             studentName.setError(" invalid name");
             studentName.requestFocus();
@@ -165,72 +139,96 @@ public class SignupParent extends AppCompatActivity implements View.OnClickListe
 
         ref= firebaseDatabase.getReference().child("Parents");
 
+        Query usernameQuery  = FirebaseDatabase.getInstance().getReference().child("Student").orderByChild("username").equalTo(username);
 
-
-
-
-        auth.createUserWithEmailAndPassword(email,password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+        usernameQuery.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
-            public void onComplete(@NonNull Task<AuthResult> task) {
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                if(dataSnapshot.getChildrenCount()>0) {
 
-                if(task.isSuccessful()){
+                    Toast.makeText(getApplicationContext(), "correct username ", Toast.LENGTH_SHORT).show();
 
-                    final  String id= firebaseUser.getUid();
-
-                    User parent= new User(name,email,password,phone ,username , image , thumb_image, id);
-
-                    HashMap<String, String> userMap = new HashMap<>();
-
-                    userMap.put("name", name);
-                    userMap.put("username" , username);
-                    userMap.put("email" , email);
-                    userMap.put("password" , password);
-                    userMap.put("phone" , phone);
-                    userMap.put("id" ,id);
-                    userMap.put("image", "default");
-                    userMap.put("thumb_image", "default");
-
-
-                    FirebaseDatabase.getInstance().getReference("Parents").child(FirebaseAuth.getInstance().getCurrentUser().getUid())
-                            .setValue(userMap).addOnCompleteListener(new OnCompleteListener<Void>() {
-
-
+                    auth.createUserWithEmailAndPassword(email,password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                         @Override
-                        public void onComplete(@NonNull Task<Void> task) {
+                        public void onComplete(@NonNull Task<AuthResult> task) {
+
                             if(task.isSuccessful()){
 
-                                progressDialog.dismiss();
-                                Toast.makeText(getApplicationContext()," Parent signup successflly" , Toast.LENGTH_SHORT).show();
-                                finish();
-                                Intent i = new Intent(getApplicationContext() , ParentInfo.class);
-                                startActivity(i);
+                                final  String id= firebaseUser.getUid();
 
+                                User parent= new User(name,email,password,phone ,username , image , thumb_image, id);
+
+                                HashMap<String, String> userMap = new HashMap<>();
+
+                                userMap.put("name", name);
+                                userMap.put("username" , username);
+                                userMap.put("email" , email);
+                                userMap.put("password" , password);
+                                userMap.put("phone" , phone);
+                                userMap.put("id" ,id);
+                                userMap.put("image", "default");
+                                userMap.put("thumb_image", "default");
+
+
+                                FirebaseDatabase.getInstance().getReference("Parents").child(FirebaseAuth.getInstance().getCurrentUser().getUid())
+                                        .setValue(userMap).addOnCompleteListener(new OnCompleteListener<Void>() {
+
+
+                                    @Override
+                                    public void onComplete(@NonNull Task<Void> task) {
+                                        if(task.isSuccessful()){
+
+                                            progressDialog.dismiss();
+                                            Toast.makeText(getApplicationContext()," Parent signup successflly" , Toast.LENGTH_SHORT).show();
+                                            finish();
+                                            Intent i = new Intent(getApplicationContext() , ParentInfo.class);
+                                            startActivity(i);
+
+                                        }
+                                        else {
+                                            progressDialog.dismiss();
+                                            if( task.getException() instanceof FirebaseAuthUserCollisionException)
+                                            {
+                                                Toast.makeText(getApplicationContext()," You are already signin " , Toast.LENGTH_SHORT).show();
+
+                                            }
+                                            else {
+                                                progressDialog.dismiss();
+                                                Toast.makeText(getApplicationContext(), " Please try again", Toast.LENGTH_SHORT).show();
+
+                                            }
+
+                                        }
+                                    }
+                                });
                             }
-                            else {
+                            else{
                                 progressDialog.dismiss();
-                                if( task.getException() instanceof FirebaseAuthUserCollisionException)
-                                {
-                                    Toast.makeText(getApplicationContext()," You are already signin " , Toast.LENGTH_SHORT).show();
 
-                                }
-                                else {
-                                    progressDialog.dismiss();
-                                    Toast.makeText(getApplicationContext(), " Please try again", Toast.LENGTH_SHORT).show();
-
-                                }
+                                Toast.makeText(getApplicationContext(), "an error accoured , Please try again", Toast.LENGTH_SHORT).show();
 
                             }
                         }
                     });
+
+
+
                 }
                 else{
-                    progressDialog.dismiss();
-
-                    Toast.makeText(getApplicationContext(), "an error accoured , Please try again", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), "choose different username " , Toast.LENGTH_SHORT).show();
 
                 }
             }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
         });
+
+
+
+
     }
 
 

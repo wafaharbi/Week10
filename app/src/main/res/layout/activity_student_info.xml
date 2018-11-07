@@ -101,15 +101,7 @@
         android:layout_marginBottom="24dp"
         android:text="Upadte" />
 
-    <TextView
-        android:id="@+id/click"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentEnd="true"
-        android:layout_marginBottom="79dp"
-        android:layout_marginEnd="106dp"
-        android:text="To update Clich here.." />
+
 
 
 </RelativeLayout>

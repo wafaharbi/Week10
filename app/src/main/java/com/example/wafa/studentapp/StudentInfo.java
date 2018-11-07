@@ -49,7 +49,6 @@ public class StudentInfo extends AppCompatActivity {
 
         listView = (ListView) findViewById(R.id.listInfoStudent);
         Button update = (Button) findViewById(R.id.btdupdate);
-        clcik = (TextView) findViewById(R.id.click);
 
 
         getSupportActionBar().setDisplayShowHomeEnabled(true);
@@ -131,7 +130,7 @@ public class StudentInfo extends AppCompatActivity {
             listView.setAdapter(arrayAdapter);
 
 
-            clcik.setOnClickListener(new View.OnClickListener() {
+            update.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
 
