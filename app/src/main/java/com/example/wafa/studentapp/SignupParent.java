@@ -30,7 +30,7 @@ import java.util.HashMap;
 
 public class SignupParent extends AppCompatActivity implements View.OnClickListener{
 
-    EditText studentName , studentEmail , studentPassword , studentPhone , studentusername ;
+    EditText ParentName , ParentEmail , ParenntPassword , ParentPhone , Parentusername ;
     Button signup;
     FirebaseAuth auth;
     FirebaseDatabase firebaseDatabase;
@@ -45,12 +45,12 @@ public class SignupParent extends AppCompatActivity implements View.OnClickListe
         setContentView(R.layout.activity_signup_parent);
 
 
-        studentName = (EditText) findViewById( R.id.editNS);
-        studentEmail= (EditText) findViewById(R.id.editES);
-        studentPassword = (EditText) findViewById(R.id.editPS);
-        studentPhone = (EditText) findViewById(R.id.editPHS);
-        studentusername = (EditText) findViewById(R.id.editstd) ;
-        signup = (Button) findViewById(R.id.btnS);
+        ParentName = (EditText) findViewById( R.id.editName);
+        ParentEmail= (EditText) findViewById(R.id.editElogin);
+        ParenntPassword = (EditText) findViewById(R.id.editPlogin);
+        ParentPhone = (EditText) findViewById(R.id.editPhone);
+        Parentusername = (EditText) findViewById(R.id.editUsername) ;
+        signup = (Button) findViewById(R.id.textViewSignup);
 
         firebaseUser =FirebaseAuth.getInstance().getCurrentUser();
 
@@ -77,56 +77,56 @@ public class SignupParent extends AppCompatActivity implements View.OnClickListe
 
         progressDialog.show();
 
-        final String name =  studentName.getText().toString().trim();
-        final String username = studentusername.getText().toString().trim();
-        final String email = studentEmail.getText().toString().trim();
-        final String password = studentPassword.getText().toString().trim();
-        final String phone = studentPhone.getText().toString().trim();
+        final String name =  ParentName.getText().toString().trim();
+        final String username = Parentusername.getText().toString().trim();
+        final String email = ParentEmail.getText().toString().trim();
+        final String password = ParenntPassword.getText().toString().trim();
+        final String phone = ParentPhone.getText().toString().trim();
         final String image = "default";
         final  String thumb_image = "default";
 
 
         if(name.isEmpty()){
-            studentName.setError(" invalid name");
-            studentName.requestFocus();
+            ParentName.setError(" invalid name");
+            ParentName.requestFocus();
             return;
         }
         if(username.isEmpty()){
-            studentusername.setError(" error email");
-            studentusername.requestFocus();
+            Parentusername.setError(" error email");
+            Parentusername.requestFocus();
             return;
         }
         if(email.isEmpty()){
-            studentEmail.setError(" error email");
-            studentEmail.requestFocus();
+            ParentEmail.setError(" error email");
+            ParentEmail.requestFocus();
             return;
         }
 
         if(!Patterns.EMAIL_ADDRESS.matcher(email).matches()){
-            studentEmail.setError("  invalid email");
-            studentEmail.requestFocus();
+            ParentEmail.setError("  invalid email");
+            ParentEmail.requestFocus();
             return;
         }
         if(password.isEmpty()){
-            studentPassword.setError("blank");
-            studentPassword.requestFocus();
+            ParenntPassword.setError("blank");
+            ParenntPassword.requestFocus();
             return;
         }
         if(password.length() < 6){
-            studentPassword.setError(" password at least 6 charecter");
-            studentPassword.requestFocus();
+            ParenntPassword.setError(" password at least 6 charecter");
+            ParenntPassword.requestFocus();
             return;
         }
 
         if(phone.isEmpty()){
-            studentPhone.setError(" empty");
-            studentPhone.requestFocus();
+            ParentPhone.setError(" empty");
+            ParentPhone.requestFocus();
             return;
         }
         if(phone.length() != 10){
 
-            studentPhone.setError(" atleast 10 number");
-            studentPhone.requestFocus();
+            ParentPhone.setError(" atleast 10 number");
+            ParentPhone.requestFocus();
             return;
 
         }
@@ -235,7 +235,7 @@ public class SignupParent extends AppCompatActivity implements View.OnClickListe
     @Override
     public void onClick(View v) {
         switch (v.getId()){
-            case R.id.btnS:
+            case R.id.textViewSignup:
                 register();
 
                 break;

@@ -24,7 +24,7 @@ import java.util.HashMap;
 
 public class SignupTeacher extends AppCompatActivity implements View.OnClickListener {
 
-    EditText studentName, studentEmail, studentPassword, studentPhone;
+    EditText TeacherName, TeacherEmail, TeacherPassword, TeacherPhone;
     Button signup;
     FirebaseAuth auth;
     FirebaseDatabase firebaseDatabase;
@@ -37,11 +37,11 @@ public class SignupTeacher extends AppCompatActivity implements View.OnClickList
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_signup_teacher);
 
-        studentName = (EditText) findViewById(R.id.editNt);
-        studentEmail = (EditText) findViewById(R.id.editEt);
-        studentPassword = (EditText) findViewById(R.id.editPt);
-        studentPhone = (EditText) findViewById(R.id.editPHt);
-        signup = (Button) findViewById(R.id.btnt);
+        TeacherName = (EditText) findViewById(R.id.editName);
+        TeacherEmail = (EditText) findViewById(R.id.editElogin);
+        TeacherPassword = (EditText) findViewById(R.id.editPlogin);
+        TeacherPhone = (EditText) findViewById(R.id.editPhone);
+        signup = (Button) findViewById(R.id.textViewSignup);
 
         firebaseUser =FirebaseAuth.getInstance().getCurrentUser();
 
@@ -72,52 +72,52 @@ public class SignupTeacher extends AppCompatActivity implements View.OnClickList
         progressDialog.show();
 
 
-        final String name = studentName.getText().toString().trim();
-        final String email = studentEmail.getText().toString().trim();
-        final String password = studentPassword.getText().toString().trim();
-        final String phone = studentPhone.getText().toString().trim();
+        final String name = TeacherName.getText().toString().trim();
+        final String email = TeacherEmail.getText().toString().trim();
+        final String password = TeacherPassword.getText().toString().trim();
+        final String phone = TeacherPhone.getText().toString().trim();
         final String img = "default";
         final  String thumb_img = "default";
 
 
         if (name.isEmpty()) {
-            studentName.setError(" invalid name");
-            studentName.requestFocus();
+            TeacherName.setError(" invalid name");
+            TeacherName.requestFocus();
             return;
         }
 
         if (email.isEmpty()) {
-            studentEmail.setError(" error email");
-            studentEmail.requestFocus();
+            TeacherEmail.setError(" error email");
+            TeacherEmail.requestFocus();
             return;
         }
 
         if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
-            studentEmail.setError("  invalid email");
-            studentEmail.requestFocus();
+            TeacherEmail.setError("  invalid email");
+            TeacherEmail.requestFocus();
             return;
         }
         if (password.isEmpty()) {
-            studentPassword.setError("blank");
-            studentPassword.requestFocus();
+            TeacherPassword.setError("blank");
+            TeacherPassword.requestFocus();
             return;
         }
         if (password.length() < 6) {
-            studentPassword.setError(" password at least 6 charecter");
-            studentPassword.requestFocus();
+            TeacherPassword.setError(" password at least 6 charecter");
+            TeacherPassword.requestFocus();
             return;
         }
 
 
         if (phone.isEmpty()) {
-            studentPhone.setError(" empty");
-            studentPhone.requestFocus();
+            TeacherPhone.setError(" empty");
+            TeacherPhone.requestFocus();
             return;
         }
         if (phone.length() != 10) {
 
-            studentPhone.setError(" atleast 10 number");
-            studentPhone.requestFocus();
+            TeacherPhone.setError(" atleast 10 number");
+            TeacherPhone.requestFocus();
             return;
 
         }
@@ -189,7 +189,7 @@ public class SignupTeacher extends AppCompatActivity implements View.OnClickList
         @Override
     public void onClick(View v) {
             switch (v.getId()){
-                case R.id.btnt:
+                case R.id.textViewSignup:
                     register();
 
                     break;

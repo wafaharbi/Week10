@@ -21,7 +21,7 @@ import com.google.firebase.database.FirebaseDatabase;
 public class LoginTeacher extends AppCompatActivity {
 
     TextView forget, signup;
-    EditText studentEmail, studentPassword;
+    EditText TeacherEmail, TeacherPassword;
     FirebaseAuth auth;
     FirebaseAuth.AuthStateListener authStateListener;
     FirebaseDatabase database;
@@ -35,10 +35,10 @@ public class LoginTeacher extends AppCompatActivity {
 
 
 
-        studentEmail = (EditText) findViewById(R.id.editElogint);
-        studentPassword = (EditText) findViewById(R.id.editPlogint);
-        forget = (TextView) findViewById(R.id.textviewForgett);
-        signup = (TextView) findViewById(R.id.textViewSignupt);
+        TeacherEmail = (EditText) findViewById(R.id.editElogin);
+        TeacherPassword = (EditText) findViewById(R.id.editPlogin);
+        forget = (TextView) findViewById(R.id.textviewForget);
+        signup = (TextView) findViewById(R.id.textViewSignup);
         auth = FirebaseAuth.getInstance();
         ref = FirebaseDatabase.getInstance().getReference().child("Teachers");
 
@@ -61,30 +61,30 @@ public class LoginTeacher extends AppCompatActivity {
     }
     public void userloginStudent(View v) {
 
-        final String email = studentEmail.getText().toString().trim();
-        final String password = studentPassword.getText().toString().trim();
+        final String email = TeacherEmail.getText().toString().trim();
+        final String password = TeacherPassword.getText().toString().trim();
 
 
 
         if (email.isEmpty()) {
-            studentEmail.setError(" error email");
-            studentEmail.requestFocus();
+            TeacherEmail.setError(" error email");
+            TeacherEmail.requestFocus();
             return;
         }
 
         if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
-            studentEmail.setError("  invalid email");
-            studentEmail.requestFocus();
+            TeacherEmail.setError("  invalid email");
+            TeacherEmail.requestFocus();
             return;
         }
         if (password.isEmpty()) {
-            studentPassword.setError("blank");
-            studentPassword.requestFocus();
+            TeacherPassword.setError("blank");
+            TeacherPassword.requestFocus();
             return;
         }
         if (password.length() < 6) {
-            studentPassword.setError(" password at least 6 charecter");
-            studentPassword.requestFocus();
+            TeacherPassword.setError(" password at least 6 charecter");
+            TeacherPassword.requestFocus();
             return;
         }
 
@@ -102,7 +102,7 @@ public class LoginTeacher extends AppCompatActivity {
 
                     Toast.makeText(getApplicationContext(), " user login ", Toast.LENGTH_SHORT).show();
                     finish();
-                    Intent i = new Intent(getApplicationContext(), TeacherInfo.class);
+                    Intent i = new Intent(getApplicationContext(), TeacherHome.class);
                     startActivity(i);
 
                 }

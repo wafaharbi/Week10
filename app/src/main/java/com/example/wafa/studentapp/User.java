@@ -87,8 +87,9 @@ public class User {
         return username;
     }
 
-    public void setUsername(String username) {
+    public String setUsername(String username) {
         this.username = username;
+        return username;
     }
 
     public String getImage() {

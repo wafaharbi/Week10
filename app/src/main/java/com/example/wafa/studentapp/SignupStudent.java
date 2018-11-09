@@ -56,12 +56,12 @@ public class SignupStudent extends AppCompatActivity implements View.OnClickList
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_signup_student);
 
-        studentName = (EditText) findViewById( R.id.editNs);
-        studentEmail= (EditText) findViewById(R.id.editEs);
-        studentPassword = (EditText) findViewById(R.id.editPs);
-        studentPhone = (EditText) findViewById(R.id.editPHs);
-        studentUsername= (EditText) findViewById(R.id.editUsernames);
-        signup = (Button) findViewById(R.id.btns);
+        studentName = (EditText) findViewById( R.id.editName);
+        studentEmail= (EditText) findViewById(R.id.editElogin);
+        studentPassword = (EditText) findViewById(R.id.editPlogin);
+        studentPhone = (EditText) findViewById(R.id.editPhone);
+        studentUsername= (EditText) findViewById(R.id.editUsername);
+        signup = (Button) findViewById(R.id.textViewSignup);
 
         firebaseUser =FirebaseAuth.getInstance().getCurrentUser();
 
@@ -267,7 +267,7 @@ public class SignupStudent extends AppCompatActivity implements View.OnClickList
     @Override
     public void onClick(View v) {
         switch (v.getId()){
-            case R.id.btns:
+            case R.id.textViewSignup:
                 register();
 
                 break;

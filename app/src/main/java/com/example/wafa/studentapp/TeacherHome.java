@@ -1,6 +1,5 @@
 package com.example.wafa.studentapp;
 
-
 import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
@@ -16,27 +15,34 @@ import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 
-public class StudentHome extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
+public class TeacherHome extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
 
-    private DrawerLayout drawer;
+
+private DrawerLayout drawer;
     FirebaseAuth auth;
+    Toolbar toolbar;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_student_home);
+        setContentView(R.layout.activity_teacher_home);
 
-        Toolbar toolbar = findViewById(R.id.toolbar);
+        toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
         drawer = findViewById(R.id.drawer_layout);
+
+
         NavigationView navigationView = findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
+
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawer, toolbar,
                 R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+
+
         drawer.addDrawerListener(toggle);
         toggle.syncState();
 
@@ -45,7 +51,9 @@ public class StudentHome extends AppCompatActivity implements NavigationView.OnN
                     new MessageFragment()).commit();
             navigationView.setCheckedItem(R.id.nav_home);
         }
+
     }
+
 
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
@@ -56,7 +64,7 @@ public class StudentHome extends AppCompatActivity implements NavigationView.OnN
                 break;
             case R.id.nav_note:
 
-               Intent i = new Intent(this, Notes.class);
+                Intent i = new Intent(this, Notes.class);
                 startActivity(i);
 
 
@@ -65,8 +73,8 @@ public class StudentHome extends AppCompatActivity implements NavigationView.OnN
             case R.id.nav_profile:
 
 
-                                       //ProfileActivity  =StudentInfo
-                Intent x = new Intent(this, StudentProfile.class);
+                //ProfileActivity  =StudentInfo
+                Intent x = new Intent(this, TeacherProfile.class);
                 startActivity(x);
                 break;
 
@@ -76,12 +84,12 @@ public class StudentHome extends AppCompatActivity implements NavigationView.OnN
             case R.id.nav_out:
 
 
-              // auth.signOut();
+                // auth.signOut();
                 Toast.makeText(getApplicationContext(), "Signout successfully" , Toast.LENGTH_SHORT).show();
                 finish();
-                Intent v = new Intent(this,LoginStudent.class);
+                Intent v = new Intent(this,LoginTeacher.class);
                 startActivity(v);
-         /*       Toast.makeText(this, "Send", Toast.LENGTH_SHORT).show();*/
+                /*       Toast.makeText(this, "Send", Toast.LENGTH_SHORT).show();*/
                 break;
         }
 
@@ -110,52 +118,9 @@ public class StudentHome extends AppCompatActivity implements NavigationView.OnN
 
     public void chat(View v){
 
-        Intent k = new Intent(this, StudentChatTeacher.class);
+        Intent k = new Intent(this, TeacherListChats.class);
         startActivity(k);
     }
 
 
 }
-
-
-
-
-
-/*
-
-import android.content.Intent;
-import android.support.annotation.NonNull;
-import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
-import android.util.Log;
-import android.view.View;
-
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.auth.UserProfileChangeRequest;
-
-public class StudentHome extends AppCompatActivity {
-
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_student_home);
-    }
-
-    public  void StudentInformation(View v) {
-
-
-
-        Intent i = new Intent(this, StudentInfo.class);
-        startActivity(i);
-    }
-
-
-
-
-
-}
-*/
-

@@ -33,10 +33,15 @@
             android:label="Profile" />
         <activity android:name=".ForgetPassword" />
         <activity android:name=".StudentUpdateInfo" />
-        <activity android:name=".ParentHome" />
+        <activity
+            android:name=".ParentHome"
+            android:label="Home"
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".LoginParent" />
         <activity android:name=".LoginTeacher" />
-        <activity android:name=".ParentInfo" />
+        <activity
+            android:name=".ParentInfo"
+            android:label="Profile" />
         <activity android:name=".TeacherInfo" />
         <activity android:name=".TeacherUpdate" />
         <activity android:name=".ParentUpadate" />
@@ -59,7 +64,23 @@
             android:name="com.theartofdev.edmodo.cropper.CropImageActivity"
             android:theme="@style/Base.Theme.AppCompat" />
         <activity android:name=".StudentChatTeacher" />
-        <activity android:name=".MessageStudentTeacher"></activity>
+        <activity android:name=".MessageStudentTeacher" />
+        <activity android:name=".OtherUsersProfile" />
+        <activity android:name=".ParentProfile" />
+        <activity
+            android:name=".TeacherHome"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".TeacherProfile" />
+        <activity android:name=".TeacherListChats" />
+        <activity android:name=".TeacherChatsStudent" />
+        <activity android:name=".MessageTeacherStudent" />
+        <activity android:name=".T" />
+        <activity android:name=".OtherStudentProfile" />
+        <activity android:name=".TeacherChatsParent" />
+        <activity android:name=".MeassageTeacherParent" />
+        <activity android:name=".OtherParentProfile" />
+        <activity android:name=".ParentChatTeacher" />
+        <activity android:name=".MessageParentTeacher"></activity>
     </application>
 
 </manifest>

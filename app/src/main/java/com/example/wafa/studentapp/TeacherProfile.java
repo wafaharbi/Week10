@@ -1,28 +1,15 @@
 package com.example.wafa.studentapp;
 
-import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
-
-import android.support.v7.app.AppCompatActivity;
-
 import android.app.ProgressDialog;
-import android.content.DialogInterface;
 import android.content.Intent;
-import android.graphics.Bitmap;
 import android.net.Uri;
-import android.os.Environment;
 import android.support.annotation.NonNull;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.text.InputType;
-import android.view.ContextThemeWrapper;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ListView;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -37,65 +24,54 @@ import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
-import com.squareup.picasso.Callback;
-import com.squareup.picasso.NetworkPolicy;
 import com.squareup.picasso.Picasso;
 import com.theartofdev.edmodo.cropper.CropImage;
-import com.theartofdev.edmodo.cropper.CropImageView;
 
-import java.io.ByteArrayOutputStream;
-import java.io.File;
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.Random;
-import java.util.Set;
 
 import de.hdodenhof.circleimageview.CircleImageView;
-//import id.zelory.compressor.Compressor;
 
-public class StudentProfile extends AppCompatActivity {
+public class TeacherProfile extends AppCompatActivity {
 
 
-    private DatabaseReference mUserDatabase;   //databaseReference
-
+    //databaseReference
+    private DatabaseReference mUserDatabase;
     private FirebaseUser mCurrentUser;
-//Android Layout
 
+    //Activity Layout
     CircleImageView mDisplayImage;
     Button mNameBtn, mImageBtn , update;
     ListView listView;
 
-
+    //for profile image
     private static final int GALLERY_PICK = 1;
+
     //Firbase Storage
     private StorageReference mImageStorage;
     private ProgressDialog mProgressDialog;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_student_profile);
-
+        setContentView(R.layout.activity_teacher_profile);
 
         mDisplayImage = (CircleImageView) findViewById(R.id.settings_image);
 
         update = (Button) findViewById(R.id.update);
         listView = (ListView) findViewById(R.id.listInfoStudent);
 
-
-
-
-       // mNameBtn = (Button) findViewById(R.id.settings_name_btn);         //Change name
-        mImageBtn = (Button) findViewById(R.id.settings_image_btn);        //Change Image
-
+        //Change Image
+        mImageBtn = (Button) findViewById(R.id.settings_image_btn);
+        // Image Storage Firebse
         mImageStorage = FirebaseStorage.getInstance().getReference();
+        //Current User on Firebase
         mCurrentUser = FirebaseAuth.getInstance().getCurrentUser();
-        String current_uid = mCurrentUser.getUid();     //u
+        String current_uid = mCurrentUser.getUid();
 
-
-        //Student
-        mUserDatabase = FirebaseDatabase.getInstance().getReference().child("Student").child(current_uid);
+        //Parent Table
+        mUserDatabase = FirebaseDatabase.getInstance().getReference().child("Teachers").child(current_uid);
         mUserDatabase.keepSynced(true);
 
         mUserDatabase.addValueEventListener(new ValueEventListener() {
@@ -105,25 +81,6 @@ public class StudentProfile extends AppCompatActivity {
 
                 showData(dataSnapshot);
 
-                //  Toast.makeText(SettingsActivity.this,dataSnapshot.toString(),Toast.LENGTH_LONG).show();
-                /*
-                String name = dataSnapshot.child("name").getValue().toString();
-                String username = dataSnapshot.child("username").getValue().toString();
-                String password = dataSnapshot.child("password").getValue().toString();
-
-//wafaaaaaaaaaa cooode
-
-                String image = dataSnapshot.child("image").getValue().toString();
-                String thumb_image = dataSnapshot.child("thumb_image").getValue().toString();
-
-
-                String phone = dataSnapshot.child("phone").getValue().toString();
-
-                mName.setText(name);
-                mUsername.setText(username);
-                mPass.setText(password);
-                mPhone.setText(phone);
-                */
             }
 
             @Override
@@ -131,23 +88,8 @@ public class StudentProfile extends AppCompatActivity {
 
             }
         });
-        // not important nooooooo
 
-       /* mNameBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-                String name_value = mName.getText().toString();
-
-                Intent name_intent = new Intent(StudentProfile.this, UpdateProfile.class);
-
-                name_intent.putExtra("name_value", name_value);
-                startActivity(name_intent);
-
-            }
-        });
-*/
-////////////////////////////////For Image ////////////////////////////
+        //For Change Profile Image
 
         mImageBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -161,7 +103,6 @@ public class StudentProfile extends AppCompatActivity {
                 startActivityForResult(Intent.createChooser(galleryIntent, "SELECT IMAGE"), GALLERY_PICK);
 
 
-
                /* CropImage.activity()
                         .setGuidelines(CropImageView.Guidelines.ON)
                         .start(StudentProfile.this);
@@ -169,10 +110,7 @@ public class StudentProfile extends AppCompatActivity {
 
             }
         });
-
-
     }
-
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -200,7 +138,7 @@ public class StudentProfile extends AppCompatActivity {
             if (resultCode == RESULT_OK) {
 
 
-                mProgressDialog=new ProgressDialog(StudentProfile.this);
+                mProgressDialog=new ProgressDialog(TeacherProfile.this);
                 mProgressDialog.setTitle("Uploading Image..");
                 mProgressDialog.setMessage("Please wait while we upload and process the image.");
                 mProgressDialog.setCanceledOnTouchOutside(false);
@@ -226,13 +164,13 @@ public class StudentProfile extends AppCompatActivity {
                                     if(task.isSuccessful()){
 
                                         mProgressDialog.dismiss();
-                                        Toast.makeText(StudentProfile.this, "Uploading  Successful", Toast.LENGTH_LONG).show();
+                                        Toast.makeText(TeacherProfile.this, "Uploading  Successful", Toast.LENGTH_LONG).show();
 
                                     }
                                 }
                             });
                         } else {
-                            Toast.makeText(StudentProfile.this, "Error", Toast.LENGTH_LONG).show();
+                            Toast.makeText(TeacherProfile.this, "Error", Toast.LENGTH_LONG).show();
                             mProgressDialog.dismiss();
                         }
 
@@ -255,18 +193,16 @@ public class StudentProfile extends AppCompatActivity {
 
 
             final String name = info.setName(dataSnapshot.child("name").getValue().toString());
-            final String username = info.setUsername(dataSnapshot.child("username").getValue().toString());
             final String email = info.setEmail(dataSnapshot.child("email").getValue().toString());
             final String password = info.setPassword(dataSnapshot.child("password").getValue().toString());
             final String phone = info.setPhone(dataSnapshot.child("phone").getValue().toString());
             final String image = dataSnapshot.child("image").getValue().toString();
 
-            Picasso.with(StudentProfile.this).load(image).placeholder(R.drawable.default_img).into(mDisplayImage);
+            Picasso.with(TeacherProfile.this).load(image).placeholder(R.drawable.default_img).into(mDisplayImage);
 
 
             ArrayList<String> array = new ArrayList<>();
             array.add(name);
-            array.add(username);
             array.add(email);
             array.add(password);
             array.add(phone);
@@ -283,12 +219,11 @@ public class StudentProfile extends AppCompatActivity {
 
 
 
-                    Intent i = new Intent(getApplicationContext(), StudentUpdateInfo.class);
+                    Intent i = new Intent(getApplicationContext(), TeacherUpdate.class);
 
                     i.putExtra("name", info.getName());
                     i.putExtra("email", info.getEmail());
                     i.putExtra("phone", info.getPhone());
-                    i.putExtra("username", info.getUsername());
 
                     startActivity(i);
                 }
@@ -314,4 +249,5 @@ public class StudentProfile extends AppCompatActivity {
 
 
 }
+
 

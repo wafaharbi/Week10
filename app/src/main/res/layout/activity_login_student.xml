@@ -16,7 +16,6 @@
         android:layout_alignParentTop="true"
         android:layout_marginStart="70dp"
         android:layout_marginTop="264dp"
-
         android:ems="10"
         android:inputType="numberPassword" />
 

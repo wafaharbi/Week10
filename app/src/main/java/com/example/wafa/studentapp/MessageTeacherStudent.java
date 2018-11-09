@@ -19,25 +19,23 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ServerValue;
 import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
 
-import java.text.DateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
-public class MessageStudentTeacher extends AppCompatActivity {
+public class MessageTeacherStudent extends AppCompatActivity {
+
 
     TextView id , nameofuser;
-    ImageButton sendbtn ;
+    ImageButton sendbtn;
     EditText sendtxt;
     FirebaseUser fuser;
-    DatabaseReference reference , currentUser ;
+    DatabaseReference reference , currentUser;
     Toolbar toolbar;
     UserAdapter userAdapter;
     List<Chat> mChat;
@@ -45,12 +43,11 @@ public class MessageStudentTeacher extends AppCompatActivity {
     DatabaseReference ref;
     CircleImageView img;
 
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_message_student_teacher);
+        setContentView(R.layout.activity_message_teacher_student);
+
 
         recyclerView = (RecyclerView) findViewById(R.id.recycle_view);
         recyclerView.setHasFixedSize(true);
@@ -61,20 +58,16 @@ public class MessageStudentTeacher extends AppCompatActivity {
         img = (CircleImageView) findViewById(R.id.umg_user);
 
 
-
         final String user_id=   getIntent().getStringExtra("user_id");
 
 
-
-        reference = FirebaseDatabase.getInstance().getReference().child("Teachers").child(user_id);
-
+        reference = FirebaseDatabase.getInstance().getReference().child("Student").child(user_id);
         id =(TextView) findViewById(R.id.nameuser);
         nameofuser = (TextView) findViewById(R.id.name);
-
         sendbtn  =(ImageButton) findViewById(R.id.btn_send);
         sendtxt = (EditText) findViewById(R.id.txt_send);
         fuser = FirebaseAuth.getInstance().getCurrentUser();
-        currentUser = FirebaseDatabase.getInstance().getReference().child("Student");
+        currentUser = FirebaseDatabase.getInstance().getReference().child("Teachers");
         id.setText(user_id);
 
 
@@ -82,7 +75,7 @@ public class MessageStudentTeacher extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                Intent i = new Intent(getApplicationContext() , OtherUsersProfile.class);
+                Intent i = new Intent(getApplicationContext() , OtherStudentProfile.class);
                 i.putExtra("user_id" , user_id);
                 startActivity(i);
 
@@ -90,16 +83,12 @@ public class MessageStudentTeacher extends AppCompatActivity {
         });
 
 
-
         sendbtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 String message= sendtxt.getText().toString();
-                String date = sendtxt.getText().toString();
-
-
                 if(!message.equals("")){
-                    sendMessage(fuser.getUid(),user_id , message, date);
+                    sendMessage(fuser.getUid(),user_id , message);
                 }
                 else{
                     Toast.makeText(getApplicationContext() , " you can not send empty message .." , Toast.LENGTH_SHORT).show();
@@ -128,43 +117,22 @@ public class MessageStudentTeacher extends AppCompatActivity {
         });
 
 
-
     }
 
 
-    private  void sendMessage(String sender , String reciver , String msg , String date){
-
-        final String user_id=   getIntent().getStringExtra("user_id");
-
-        date = DateFormat.getDateTimeInstance().format(new Date());
-
-
-
+    private  void sendMessage(String sender , String reciver , String msg){
 
         DatabaseReference ref = FirebaseDatabase.getInstance().getReference();
-
-
-
 
         HashMap<String , Object> hashMap  =new HashMap<>();
         hashMap.put("sender", sender);
         hashMap.put("reciver", reciver);
         hashMap.put("message", msg);
-        hashMap.put("time" , ServerValue.TIMESTAMP);
-        hashMap.put("date", date);
-
-
 
         ref.child("Chats").push().setValue(hashMap);
-
-
-
     }
 
-
-
     private void readMessage(final String myid , final String userid ){
-
 
         mChat = new ArrayList<>();
         DatabaseReference  Ref= FirebaseDatabase.getInstance().getReference().child("Chats");
@@ -182,16 +150,11 @@ public class MessageStudentTeacher extends AppCompatActivity {
                     if(chat.getReciver().toString().equals(myid) && chat.getSender().toString().equals(userid)||
                             chat.getReciver().toString().equals(userid) && chat.getSender().toString().equals(myid)){
 
-
                         mChat.add(chat);
                     }
-
-                    userAdapter = new UserAdapter(MessageStudentTeacher.this  , mChat );
-
+                    userAdapter = new UserAdapter(MessageTeacherStudent.this  , mChat );
                     recyclerView.setAdapter(userAdapter);
                 }
-
-
             }
 
             @Override
@@ -203,5 +166,3 @@ public class MessageStudentTeacher extends AppCompatActivity {
     }
 
 }
-
-

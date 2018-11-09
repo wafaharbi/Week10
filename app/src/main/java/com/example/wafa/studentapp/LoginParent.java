@@ -15,13 +15,14 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 public class LoginParent extends AppCompatActivity {
 
     TextView forget, signup;
-    EditText studentEmail, studentPassword, studentUsername;
+    EditText ParentEmail, ParentPassword, studentUsername;
     FirebaseAuth auth;
     FirebaseAuth.AuthStateListener authStateListener;
     FirebaseDatabase database;
@@ -33,11 +34,11 @@ public class LoginParent extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login_parent);
 
-        studentUsername = (EditText) findViewById(R.id.editUsernamep);
-        studentEmail = (EditText) findViewById(R.id.editEloginp);
-        studentPassword = (EditText) findViewById(R.id.editPloginp);
-        forget = (TextView) findViewById(R.id.textviewForgetp);
-        signup = (TextView) findViewById(R.id.textViewSignupp);
+       // studentUsername = (EditText) findViewById(R.id.editUsernamep);
+        ParentEmail = (EditText) findViewById(R.id.editElogin);
+        ParentPassword = (EditText) findViewById(R.id.editPlogin);
+        forget = (TextView) findViewById(R.id.textviewForget);
+        signup = (TextView) findViewById(R.id.textViewSignup);
         auth = FirebaseAuth.getInstance();
         ref = FirebaseDatabase.getInstance().getReference().child("Parents");
 
@@ -62,9 +63,9 @@ public class LoginParent extends AppCompatActivity {
 
     public void userloginStudent(View v) {
 
-        final String username = studentUsername.getText().toString().trim();
-        final String email = studentEmail.getText().toString().trim();
-        final String password = studentPassword.getText().toString().trim();
+      //  final String username = studentUsername.getText().toString().trim();
+        final String email = ParentEmail.getText().toString().trim();
+        final String password = ParentPassword.getText().toString().trim();
 
       //  final Parent parent= new Parent(email,password,username);
        // final Student student = new Student(email,password,username);
@@ -72,37 +73,41 @@ public class LoginParent extends AppCompatActivity {
 
 
 
-
+/*
         if (username.isEmpty()) {
             studentUsername.setError(" invalid username");
             studentUsername.requestFocus();
             return;
 
         }
+        */
         if (email.isEmpty()) {
-            studentEmail.setError(" error email");
-            studentEmail.requestFocus();
+            ParentEmail.setError(" error email");
+            ParentEmail.requestFocus();
             return;
         }
 
         if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
-            studentEmail.setError("  invalid email");
-            studentEmail.requestFocus();
+            ParentEmail.setError("  invalid email");
+            ParentEmail.requestFocus();
             return;
         }
         if (password.isEmpty()) {
-            studentPassword.setError("blank");
-            studentPassword.requestFocus();
+            ParentPassword.setError("blank");
+            ParentPassword.requestFocus();
             return;
         }
         if (password.length() < 6) {
-            studentPassword.setError(" password at least 6 charecter");
-            studentPassword.requestFocus();
+            ParentPassword.setError(" password at least 6 charecter");
+            ParentPassword.requestFocus();
             return;
         }
+
+
         final ProgressDialog progressDialog = new ProgressDialog(this);
         progressDialog.setMessage("Logging in, please wait...");
         progressDialog.show();
+
 
 
         auth.signInWithEmailAndPassword(email, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
@@ -114,7 +119,7 @@ public class LoginParent extends AppCompatActivity {
 
                     Toast.makeText(getApplicationContext(), " user login ", Toast.LENGTH_SHORT).show();
                     finish();
-                    Intent i = new Intent(getApplicationContext(), ParentInfo.class);
+                    Intent i = new Intent(getApplicationContext(), ParentHome.class);
                     startActivity(i);
 
                 }
