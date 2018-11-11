@@ -85,7 +85,7 @@ public class ParentUpadate extends AppCompatActivity {
 
                     ParentUpadate.this.finish();
 
-                    Intent i =new Intent(getApplicationContext(), ParentInfo.class);
+                    Intent i =new Intent(getApplicationContext(), ParentProfile.class);
                     startActivity(i);
 
                 }

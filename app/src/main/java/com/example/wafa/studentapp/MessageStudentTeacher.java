@@ -43,7 +43,7 @@ public class MessageStudentTeacher extends AppCompatActivity {
     List<Chat> mChat;
     RecyclerView recyclerView;
     DatabaseReference ref;
-    CircleImageView img;
+    CircleImageView mDisplayImage;
 
 
 
@@ -58,7 +58,7 @@ public class MessageStudentTeacher extends AppCompatActivity {
         linearLayoutManager.setStackFromEnd(true);
         recyclerView.setLayoutManager(linearLayoutManager);
 
-        img = (CircleImageView) findViewById(R.id.umg_user);
+        mDisplayImage = (CircleImageView) findViewById(R.id.umg_user);
 
 
 
@@ -94,11 +94,14 @@ public class MessageStudentTeacher extends AppCompatActivity {
         sendbtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 String message= sendtxt.getText().toString();
                 String date = sendtxt.getText().toString();
 
 
                 if(!message.equals("")){
+
+
                     sendMessage(fuser.getUid(),user_id , message, date);
                 }
                 else{
@@ -115,6 +118,10 @@ public class MessageStudentTeacher extends AppCompatActivity {
 
 
                 final String name = dataSnapshot.child("name").getValue().toString();
+                final String image = dataSnapshot.child("image").getValue().toString();
+
+                Picasso.with(MessageStudentTeacher.this).load(image).placeholder(R.drawable.default_img).into(mDisplayImage);
+
                 nameofuser.setText(name);
 
                 readMessage(fuser.getUid() , user_id);

@@ -71,6 +71,7 @@ public class TeacherChatsStudent extends AppCompatActivity {
                 });
 
             }
+
         };
 
         mUserList.setAdapter(firebaseRecyclerAdapter);

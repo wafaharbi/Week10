@@ -83,7 +83,7 @@ public class TeacherUpdate extends AppCompatActivity {
 
                 TeacherUpdate.this.finish();
 
-                Intent i =new Intent(getApplicationContext(), TeacherInfo.class);
+                Intent i =new Intent(getApplicationContext(), TeacherProfile.class);
                 startActivity(i);
 
             }

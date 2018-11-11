@@ -100,7 +100,7 @@ public class StudentUpdateInfo extends AppCompatActivity {
 
                StudentUpdateInfo.this.finish();
 
-               Intent i =new Intent(getApplicationContext(), StudentInfo.class);
+               Intent i =new Intent(getApplicationContext(), StudentProfile.class);
                startActivity(i);
 
            }

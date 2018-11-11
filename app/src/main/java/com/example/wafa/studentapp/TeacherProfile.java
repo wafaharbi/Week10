@@ -148,6 +148,7 @@ public class TeacherProfile extends AppCompatActivity {
                 String current_user_id = mCurrentUser.getUid();
 
                 StorageReference filepath = mImageStorage.child("Profile_images").child(current_user_id+".jpg");
+
                 filepath.putFile(resultUri).addOnCompleteListener(new OnCompleteListener<UploadTask.TaskSnapshot>() {
                     @Override
                     public void onComplete(@NonNull Task<UploadTask.TaskSnapshot> task) {

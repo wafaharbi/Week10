@@ -12,6 +12,7 @@ import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
@@ -21,6 +22,9 @@ public class StudentHome extends AppCompatActivity implements NavigationView.OnN
 
     private DrawerLayout drawer;
     FirebaseAuth auth;
+
+
+    ImageView profile;
 
 
     @Override
@@ -73,10 +77,11 @@ public class StudentHome extends AppCompatActivity implements NavigationView.OnN
             case R.id.nav_share:
                 Toast.makeText(this, "Share", Toast.LENGTH_SHORT).show();
                 break;
+
             case R.id.nav_out:
 
 
-              // auth.signOut();
+                auth.signOut();
                 Toast.makeText(getApplicationContext(), "Signout successfully" , Toast.LENGTH_SHORT).show();
                 finish();
                 Intent v = new Intent(this,LoginStudent.class);

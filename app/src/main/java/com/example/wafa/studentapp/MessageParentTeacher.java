@@ -21,10 +21,15 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ServerValue;
 import com.google.firebase.database.ValueEventListener;
+import com.squareup.picasso.Picasso;
 
+import java.text.DateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+
+import de.hdodenhof.circleimageview.CircleImageView;
 
 public class MessageParentTeacher extends AppCompatActivity {
 
@@ -38,6 +43,7 @@ public class MessageParentTeacher extends AppCompatActivity {
     List<Chat> mChat;
     RecyclerView recyclerView;
     DatabaseReference ref;
+    CircleImageView mDisplayImage;
 
 
     @Override
@@ -56,6 +62,8 @@ public class MessageParentTeacher extends AppCompatActivity {
         reference = FirebaseDatabase.getInstance().getReference().child("Teachers").child(user_id);
         id =(TextView) findViewById(R.id.nameuser);
         nameofuser = (TextView) findViewById(R.id.name);
+        mDisplayImage = (CircleImageView) findViewById(R.id.umg_user);
+
         sendbtn  =(ImageButton) findViewById(R.id.btn_send);
         sendtxt = (EditText) findViewById(R.id.txt_send);
         fuser = FirebaseAuth.getInstance().getCurrentUser();
@@ -76,8 +84,10 @@ public class MessageParentTeacher extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 String message= sendtxt.getText().toString();
+                String date = sendtxt.getText().toString();
+
                 if(!message.equals("")){
-                    sendMessage(fuser.getUid(),user_id , message);
+                    sendMessage(fuser.getUid(),user_id , message , date);
                 }
                 else{
                     Toast.makeText(getApplicationContext() , " you can not send empty message .." , Toast.LENGTH_SHORT).show();
@@ -93,6 +103,9 @@ public class MessageParentTeacher extends AppCompatActivity {
 
 
                 final String name = dataSnapshot.child("name").getValue().toString();
+                final String image = dataSnapshot.child("image").getValue().toString();
+
+                Picasso.with(MessageParentTeacher.this).load(image).placeholder(R.drawable.default_img).into(mDisplayImage);
                 nameofuser.setText(name);
 
                 readMessage(fuser.getUid() , user_id);
@@ -107,9 +120,11 @@ public class MessageParentTeacher extends AppCompatActivity {
 
     }
 
-    private  void sendMessage(String sender , String reciver , String msg){
+    private  void sendMessage(String sender , String reciver , String msg , String date){
 
         final String user_id=   getIntent().getStringExtra("user_id");
+
+        date = DateFormat.getDateTimeInstance().format(new Date());
 
         DatabaseReference ref = FirebaseDatabase.getInstance().getReference();
 
@@ -118,6 +133,8 @@ public class MessageParentTeacher extends AppCompatActivity {
         hashMap.put("reciver", reciver);
         hashMap.put("message", msg);
         hashMap.put("timestamp", ServerValue.TIMESTAMP);
+        hashMap.put("date", date);
+
 
 
         ref.child("Chats").push().setValue(hashMap);

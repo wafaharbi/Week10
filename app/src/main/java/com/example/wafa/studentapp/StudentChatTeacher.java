@@ -72,6 +72,7 @@ public class StudentChatTeacher extends AppCompatActivity {
 
 
                 viewHolder.setName(model.getName());
+
                 viewHolder.setUserImage(model.getImage() , getApplicationContext());
 
 
